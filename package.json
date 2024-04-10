@@ -4,7 +4,10 @@
   "description": "Moving circles loader",
   "author": "softwarenacho",
   "license": "MIT",
-  "repository": "softwarenacho/loader-nacho",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/softwarenacho/loader-nacho.git"
+  },
   "main": "dist/index.js",
   "module": "dist/index.modern.js",
   "source": "src/index.tsx",
