@@ -15,12 +15,11 @@ npm install --save loader-nacho
 ```tsx
 import React, { Component } from 'react'
 
-import MyComponent from 'loader-nacho'
-import 'loader-nacho/dist/index.css'
+import Loader from 'loader-nacho'
 
 class Example extends Component {
   render() {
-    return <MyComponent />
+    return <Loader />
   }
 }
 ```
