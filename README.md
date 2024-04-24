@@ -2,7 +2,7 @@
 
 ![loader-nacho](/example/loader-nacho.png)
 
-![loader animation](/example/loader-nacho.gif)
+![loader animation](https://raw.githubusercontent.com/softwarenacho/loader-nacho/main/example/loading.gif)
 
 A customizable loader component for displaying loading animations in React applications.
 
