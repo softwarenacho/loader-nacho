@@ -1,10 +1,9 @@
 # Loader Component
 
-![loader-nacho](https://imgur.com/HIMfYzF)
+![loader-nacho](/example/loader-nacho.mp4)
+![loader-nacho](/example/loader-nacho.png)
 
 A customizable loader component for displaying loading animations in React applications.
-
-https://i.imgur.com/vOgbtSQ.mp4
 
 It displays 4 circles around an image.
 
