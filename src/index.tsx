@@ -14,7 +14,7 @@ const Loader: React.FC<LoaderProps> = ({
   icon,
   itemBackgroundColor = '#991b87',
   itemTextColor = '#ffffff',
-  animationDuration = '2.5s',
+  animationDuration = '2s',
   circleColors = ['#3fffff80', '#ac60ef80', '#04f1a280', '#f77bda80'],
   circleSize = '150px',
   borderWidth = '125px'
@@ -64,8 +64,8 @@ const Loader: React.FC<LoaderProps> = ({
   const iconStyles: React.CSSProperties = {
     zIndex: 4,
     color: itemTextColor,
-    animation: 'pulse 3s ease infinite',
-    filter: 'drop-shadow(5px 5px 10px black)'
+    animation: `pulse ${parseInt(animationDuration)}s ease infinite`,
+    filter: `${itemBackgroundColor ? '' : 'drop-shadow(5px 5px 10px black)'}`
   }
 
   const keyframes = `@keyframes rotate {
