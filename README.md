@@ -1,6 +1,5 @@
 # Loader Component
 
-![loader-nacho](/example/loader-nacho.mp4)
 ![loader-nacho](/example/loader-nacho.png)
 
 A customizable loader component for displaying loading animations in React applications.
