@@ -34,9 +34,11 @@ const Loader: React.FC<LoaderProps> = ({
     position: 'absolute',
     width: borderWidth,
     height: borderWidth,
-    background: `linear-gradient(30deg, ${itemBackgroundColor} 0%, #3f1867 100%)`,
+    background: `linear-gradient(30deg, ${itemBackgroundColor} 0%, ${
+      itemBackgroundColor !== '#991b87' ? itemBackgroundColor : '#3f1867'
+    } 100%)`,
     borderRadius: '50%',
-    boxShadow: '0 0 5px 2px #7f5879'
+    boxShadow: `${itemBackgroundColor ? '' : '0 0 5px 2px #7f5879'}`
   }
 
   const circleContainerStyles: React.CSSProperties = {
