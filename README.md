@@ -2,6 +2,8 @@
 
 ![loader-nacho](/example/loader-nacho.png)
 
+![loader animation](/example/loader-nacho.gif)
+
 A customizable loader component for displaying loading animations in React applications.
 
 It displays 4 circles around an image.
