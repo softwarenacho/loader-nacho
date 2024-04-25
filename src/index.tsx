@@ -1,24 +1,46 @@
 import React from 'react'
 
 interface LoaderProps {
-  icon: string
+  icon?: string
   itemBackgroundColor?: string
   itemTextColor?: string
+  animationEase?: string
   animationDuration?: string
   circleColors?: string[]
   circleSize?: string
   borderWidth?: string
+  gradientColor?: string
+  circleOpacity?: number
+  boxShadowBlur?: string
 }
 
 const Loader: React.FC<LoaderProps> = ({
   icon,
   itemBackgroundColor = '#991b87',
   itemTextColor = '#ffffff',
+  animationEase = 'ease',
   animationDuration = '2s',
   circleColors = ['#3fffff80', '#ac60ef80', '#04f1a280', '#f77bda80'],
   circleSize = '150px',
-  borderWidth = '125px'
+  borderWidth = '125px',
+  gradientColor = '#3f1867',
+  circleOpacity = 0.75,
+  boxShadowBlur = '20px'
 }: LoaderProps) => {
+  const multiplyTimeString = (
+    timeString: string,
+    multiplier: number
+  ): string => {
+    // Extract the numeric part of the string
+    const numericPart = parseFloat(timeString)
+    // Extract the unit part of the string (e.g., "s" or "ms")
+    const unit = timeString.replace(/[^a-zA-Z]/g, '')
+    // Multiply the numeric part and convert it back to the string
+    const result = (numericPart * multiplier).toString()
+    // Combine the result with the unit and return
+    return result + unit
+  }
+
   const loaderStyles: React.CSSProperties = {
     display: 'flex',
     justifyContent: 'center',
@@ -34,37 +56,42 @@ const Loader: React.FC<LoaderProps> = ({
     position: 'absolute',
     width: borderWidth,
     height: borderWidth,
-    background: `linear-gradient(30deg, ${itemBackgroundColor} 0%, ${
-      itemBackgroundColor !== '#991b87' ? itemBackgroundColor : '#3f1867'
-    } 100%)`,
+    background: `linear-gradient(30deg, ${itemBackgroundColor} 0%, ${gradientColor} 100%)`,
     borderRadius: '50%',
-    boxShadow: `${itemBackgroundColor ? '' : '0 0 5px 2px #7f5879'}`
+    boxShadow: `${
+      itemBackgroundColor
+        ? `0 0 5px 2px ${itemBackgroundColor}`
+        : '0 0 5px 2px #7f5879'
+    }`
   }
 
   const circleContainerStyles: React.CSSProperties = {
     position: 'absolute',
     width: parseInt(circleSize) + 30 + 'px',
-    height: parseInt(circleSize) + 30 + 'px', // Add 30px for padding and margins
-    animation: `rotate ${animationDuration} ease infinite`
+    height: parseInt(circleSize) + 30 + 'px',
+    animation: `rotate ${animationDuration} ${animationEase} infinite`
   }
 
   const circleStyles: React.CSSProperties = {
-    zIndex: 1,
     position: 'absolute',
     width: circleSize,
     height: circleSize,
     backgroundColor: 'transparent',
-    opacity: 0.75,
+    opacity: circleOpacity,
     borderRadius: '50%',
-    animation: `combined ${
-      parseInt(animationDuration) * 2
-    } ease-in-out infinite`
+    animation: `combined ${multiplyTimeString(
+      animationDuration,
+      1.5
+    )} ${animationEase} infinite`
   }
 
   const iconStyles: React.CSSProperties = {
     zIndex: 4,
     color: itemTextColor,
-    animation: `pulse ${parseInt(animationDuration)}s ease infinite`,
+    animation: `pulse ${multiplyTimeString(
+      animationDuration,
+      2
+    )} ${animationEase} infinite`,
     filter: `${itemBackgroundColor ? '' : 'drop-shadow(5px 5px 10px black)'}`
   }
 
@@ -79,51 +106,37 @@ const Loader: React.FC<LoaderProps> = ({
 
   @keyframes combined {
     0% {
-      transform: rotate(0deg) scale(1) translate(2.5px, -2.5px);
-      z-index: 2;
+      transform: rotate(0deg) translate(2.5px, -2.5px);
     }
     10% {
-      transform: rotate(90deg) scale(1.2) translate(2.5px, 0);
-      shape-outside: ellipse(150% 90%);
-      z-index: 1;
+      transform: rotate(90deg)) translate(2.5px, 0);
     }
     20% {
-      transform: rotate(180deg) scale(1) translate(-2.5px, -2.5px);
-      z-index: 2;
+      transform: rotate(180deg) translate(-2.5px, -2.5px);
     }
     30% {
-      transform: rotate(270deg) scale(1.2) translate(0, 2.5px);
-      z-index: 1;
+      transform: rotate(270deg)) translate(0, 2.5px);
     }
     40% {
-      transform: rotate(360deg) scale(1.1) translate(-2.5px, 0);
-      z-index: 1;
+      transform: rotate(360deg)) translate(-2.5px, 0);
     }
     50% {
-      transform: rotate(270deg) scale(1) translate(-2.5px, 2.5px);
-      z-index: 2;
+      transform: rotate(270deg) translate(-2.5px, 2.5px);
     }
     60% {
-      transform: rotate(180deg) scale(1.1) translate(-2.5px, 0);
-      z-index: 1;
-      shape-outside: ellipse(20% 180%);
+      transform: rotate(180deg)) translate(-2.5px, 0);
     }
     70% {
-      transform: rotate(90deg) scale(1) translate(-2.5px, -2.5px);
-      z-index: 2;
+      transform: rotate(90deg) translate(-2.5px, -2.5px);
     }
     80% {
-      transform: rotate(0deg) scale(1) translate(0, 2.5px);
-      shape-outside: ellipse(140% 40%);
-      z-index: 1;
+      transform: rotate(0deg) translate(0, 2.5px);
     }
     90% {
-      transform: rotate(90deg) scale(1.1) translate(0, -2.5px);
-      z-index: 2;
+      transform: rotate(90deg)) translate(0, -2.5px);
     }
     100% {
-      transform: rotate(0deg) scale(1) translate(-2.5px, 2.5px);
-      z-index: 2;
+      transform: rotate(0deg) translate(-2.5px, 2.5px);
     }
   }
 
@@ -149,6 +162,14 @@ const Loader: React.FC<LoaderProps> = ({
     <div>
       <style>{keyframes}</style>
       <div style={loaderStyles}>
+        {icon && (
+          <img
+            style={iconStyles}
+            src={icon}
+            data-testid='icon'
+            alt='Loading Icon'
+          />
+        )}
         <div style={borderStyles} data-testid='border' />
         <div style={circleContainerStyles} data-testid='circleContainer'>
           {circleColors.map((color, index) => (
@@ -156,24 +177,19 @@ const Loader: React.FC<LoaderProps> = ({
               key={index}
               style={{
                 ...circleStyles,
-                boxShadow: `0 0 10px 20px ${color}`,
+                zIndex: index + 1,
+                boxShadow: `0 0 ${boxShadowBlur} ${boxShadowBlur} ${color}`,
                 backgroundColor: color,
-                top: index % 2 === 0 ? '1px' : 'auto',
-                bottom: index % 2 !== 0 ? '1px' : 'auto',
-                left: index % 4 === 0 || index % 4 === 3 ? '1px' : 'auto',
-                right: index % 4 === 2 || index % 4 === 3 ? '1px' : 'auto',
-                animationDelay: `${index * 0.4}s`
+                top: index % 4 === 0 ? '2px' : 'auto',
+                bottom: index % 4 === 1 ? '2px' : 'auto',
+                left: index % 4 === 2 ? '2px' : 'auto',
+                right: index % 4 === 3 ? '2px' : 'auto',
+                animationDelay: `${index * 0.2}s`
               }}
               data-testid='circle'
             />
           ))}
         </div>
-        <img
-          style={iconStyles}
-          src={icon}
-          data-testid='icon'
-          alt='Loading Icon'
-        />
       </div>
     </div>
   )
